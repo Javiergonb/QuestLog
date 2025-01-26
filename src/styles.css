@@ -4,9 +4,11 @@
 *{
     font-family: "Smooch Sans", serif;
 }
+html{
+    background-color: #213555;
+}
 
 .main-container{
-    
     display: flex;
     justify-content: center; /* Horizontally center the rectangle */
     align-items: center;    /* Vertically center the rectangle */
@@ -28,6 +30,7 @@
     display: flex;
     flex-direction: column;
     background-color: #D8C4B6;
+    border-radius: 10px;
 }
 
 .all-quests-container{
@@ -63,6 +66,7 @@
     align-items: center;
     font-size: 25px;
     color: white;
+    border-radius: 5px;
 }
 
 .title-status,
@@ -83,8 +87,6 @@
 .quest-lines-header{
     font-size: 30px;
     text-decoration: underline;
-    display: flex;
-    flex-direction: column;
 }
 
 .quest-line-list{
@@ -94,6 +96,7 @@
     padding-left: 10px;
     overflow: auto;
     font-size: 25px;
+    height: 300px;
 }
 
 .new-quest-button-container{
@@ -117,3 +120,8 @@
 .details-button{
     font-size: 25px;
 }
+
+.hidden {
+    display: none;
+}
+
