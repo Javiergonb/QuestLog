@@ -1,5 +1,5 @@
-function Quest(title, description, dueDate, priority) {
-    return { title, description, dueDate, priority };
+function Quest(title, description, dueDate, priority,complete = false) {
+    return { title, description, dueDate, priority,complete};
 }
 
 
@@ -21,6 +21,9 @@ function QuestLog() {
         if (!questLines[questLine]) {
             throw new Error(`QuestLine '${questLine}' does not exist`);
         }
+        if (!allQuests.includes(quest)) {
+            addQuest(quest)
+        }
         questLines[questLine].push(quest);
     }
 
@@ -36,7 +39,6 @@ function QuestLog() {
         if (index !== -1) {
             allQuests.splice(index, 1);
         }
-        // Remove references from all quest lines
         for (const line of Object.values(questLines)) {
             const questIndex = line.indexOf(quest);
             if (questIndex !== -1) {
@@ -44,9 +46,6 @@ function QuestLog() {
             }
         }
     };
-
-
-
 
     return {
         addQuest,
@@ -61,26 +60,7 @@ function QuestLog() {
 }
 
 
-const questLog = (function(){return QuestLog()})();
-
-const quest1 = Quest("Find the artifact", "Retrieve the lost artifact", "2025-01-30", "High");
-const quest2 = Quest("Rescue the princess", "Save the princess from the tower", "2025-02-10", "Medium");
-
-questLog.addQuest(quest1)
-questLog.addQuest(quest2)
-
-console.log(questLog.allQuests)
+export { Quest, QuestLog };
 
 
-questLog.createQuestLine("Main Quest")
-questLog.createQuestLine("Side Quests")
-
-questLog.addQuestToQuestLine(quest1,"Main Quest")
-questLog.addQuestToQuestLine(quest2,"Side Quests")
-console.log(questLog.questLines)
-
-
-questLog.removeQuest(quest1)
-
-console.log(questLog.allQuests)
 
