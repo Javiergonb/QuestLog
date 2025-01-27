@@ -3,10 +3,12 @@ function Quest(title, description, dueDate, priority,complete = false) {
 }
 
 
-//Gets all quests
+
 function QuestLog() {
     const allQuests = [];
     const questLines = {};
+
+    let currentQuestLine = null;
 
     const addQuest = (quest) => {allQuests.push(quest)};
 
@@ -28,6 +30,7 @@ function QuestLog() {
     }
 
     const getQuestsInQuestLine = (questLineName) => {
+    
         if (!questLines[questLineName]) {
             throw new Error(`QuestLine '${questLineName}' does not exist`);
         }
@@ -47,6 +50,15 @@ function QuestLog() {
         }
     };
 
+    const getCurrentQuestLine = () => currentQuestLine;
+
+    const setCurrentQuestLine = (newQuestLineName) => {
+        if (!questLines[newQuestLineName]) {
+            throw new Error(`QuestLine '${questLine}' does not exist`);
+        }
+        currentQuestLine = newQuestLineName;
+    }
+
     return {
         addQuest,
         createQuestLine,
@@ -55,6 +67,8 @@ function QuestLog() {
         getQuestsInQuestLine,
         allQuests,
         questLines,
+        getCurrentQuestLine,
+        setCurrentQuestLine,
 
     }
 }
