@@ -125,3 +125,51 @@ html{
     display: none;
 }
 
+dialog{
+    width: 300px;
+    height: 500px;
+}
+
+.new-quest-button button{
+    width: 50px;
+    font-size: 40px;
+}
+
+
+#new-quest-form{
+    display: flex;
+    flex-direction: column;
+}
+#new-quest-modal{
+    font-size: 25px;
+}
+
+
+.form-sidebar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+}
+
+.tab.current-tab {
+    background-color: #007bff;
+    color: white;
+}
+
+.form-container {
+    display: none;
+}
+
+.form-container:not(.hidden) {
+    display: block;
+}

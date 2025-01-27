@@ -8,30 +8,54 @@
 </head>
 <body>
     <dialog id="new-quest-modal">
-        <form id="new-quest-form">
-            <h2>Create a New Quest</h2>
-            
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" required>
-            
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" required></textarea>
-            
-            <label for="dueDate">Due Date:</label>
-            <input type="date" id="dueDate" name="dueDate" required>
-            
-            <label for="priority">Priority:</label>
-            <select id="priority" name="priority">
-                <option value="High">High</option>
-                <option value="Medium">Medium</option>
-                <option value="Low">Low</option>
-            </select>
-            
-            <div class="modal-actions">
-                <button type="submit">Create Quest</button>
-                <button type="button" id="cancel-form">Cancel</button>
+        <div class="modal-content">
+            <div class="form-sidebar">
+                <button id="create-quest-tab" class="tab current-tab">Create Quest</button>
+                <button id="create-questline-tab" class="tab">Create QuestLine</button>
             </div>
-        </form>
+            <div id = "create-quest-form-container" class="form-container">
+                <form id="new-quest-form">
+                    <h2>Create a New Quest</h2>
+                    
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" name="title" required>
+                    
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" required></textarea>
+                    
+                    <label for="dueDate">Due Date:</label>
+                    <input type="date" id="dueDate" name="dueDate" required>
+                    
+                    <label for="priority">Priority:</label>
+                    <select id="priority" name="priority">
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                    
+                    <div class="modal-actions">
+                        <button type="submit">Create Quest</button>
+                        <button type="button" id="cancel-form">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="create-questline-form-container" class="form-container hidden">
+                <form id="create-questline-form">
+                    <h2>Create a New QuestLine</h2>
+                    <label for="questline-name">QuestLine Name:</label>
+                    <input type="text" id="questline-name" name="questline-name" required>
+                    
+                    <div class="modal-actions">
+                        <button type="submit">Create QuestLine</button>
+                        <button type="button" id="cancel-modal-questline">Cancel</button>
+                    </div>
+                </form>
+            </div>
+            
+
+        </div>
+        
         
       </dialog>
     <div class="main-container">
@@ -56,6 +80,9 @@
                     </div>
                     
                 </div>
+            </div>
+            <div>
+                
             </div>
             <div class="quest-list">
                 <div class="quest-card">

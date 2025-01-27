@@ -16,7 +16,6 @@ function RendererManager() {
     questLog.createQuestLine("Misc")
 
     //relevant doms
-    const sidebar = document.querySelector(".sidebar");
     const questLinesList = document.querySelector(".quest-line-list");
     const questList = document.querySelector(".quest-list");
     const activeQuestLine = document.querySelector(".active");
@@ -75,13 +74,18 @@ function RendererManager() {
         questLog.addQuestToQuestLine(quest,activeQuestLine.textContent)
     }
 
+    const addQuestLine = (questLineName) =>{
+        questLog.createQuestLine(questLineName)
+    }
+
     renderQuests()
     renderQuestsLines()
 
     return{
         renderQuests,
         renderQuestsLines,
-        addQuest
+        addQuest,
+        addQuestLine,
     }
 
 
@@ -91,8 +95,16 @@ function RendererManager() {
 function DOM_EVENTS(UI) {
     const plusButton = document.querySelector(".new-quest-button");
     const modal = document.querySelector("#new-quest-modal");
-    const form = document.querySelector("#new-quest-form");
+    const questForm = document.querySelector("#new-quest-form");
     const cancelFormButton = document.querySelector("#cancel-form");
+
+    const createQuestTab = document.querySelector("#create-quest-tab");
+    const createQuestLineTab = document.querySelector("#create-questline-tab");
+    const questFormContainer = document.querySelector("#create-quest-form-container");
+    const questlineFormContainer = document.querySelector("#create-questline-form-container");
+    const questlineForm = document.querySelector("#create-questline-form");
+
+
 
     plusButton.addEventListener("click", () => {
         modal.showModal();
@@ -102,7 +114,7 @@ function DOM_EVENTS(UI) {
         modal.close();
     });
 
-    form.addEventListener("submit", (e) => {
+    questForm.addEventListener("submit", (e) => {
         e.preventDefault();
 
         const title = document.querySelector("#title").value;
@@ -115,7 +127,19 @@ function DOM_EVENTS(UI) {
         UI.addQuest(newQuest)
         UI.renderQuests();
 
-        form.reset();
+        questForm.reset();
+        modal.close();
+    });
+
+    questlineForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const questlineName = document.querySelector("#questline-name").value;
+
+        UI.addQuestLine(questlineName);
+        UI.renderQuestsLines();
+
+        questlineForm.reset();
         modal.close();
     });
 
@@ -124,6 +148,24 @@ function DOM_EVENTS(UI) {
             modal.close()
         }
     });
+
+
+    createQuestTab.addEventListener("click", () => {
+        questFormContainer.classList.remove("hidden");
+        questlineFormContainer.classList.add("hidden");
+        createQuestTab.classList.add("current-tab");
+        createQuestLineTab.classList.remove("current-tab");
+    });
+
+    createQuestLineTab.addEventListener("click", () => {
+        questFormContainer.classList.add("hidden");
+        questlineFormContainer.classList.remove("hidden");
+        createQuestTab.classList.remove("current-tab");
+        createQuestLineTab.classList.add("current-tab");
+    });
+    
+
+    
 
 }
 
