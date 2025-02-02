@@ -32,6 +32,9 @@ export const QuestRenderer = (questLog, domElements) => {
         detailsButton.addEventListener("click",()=>{
             handleDetailsButton(questElement);
         })
+        editButton.addEventListener("click",()=>{
+            handleEditButton(questElement);
+        });
     };
 
     const renderQuests = () => {
@@ -154,6 +157,81 @@ export const QuestRenderer = (questLog, domElements) => {
         questElement.classList.toggle("completed")
 
     }
+
+    const handleEditButton = (questElement) => {
+        const quest = findQuest(questElement.querySelector(".quest-title").textContent);
+        if (!quest) {
+            console.error('Quest not found:', quest.title);
+            return;
+        }
+    
+        const modal = createEditModal(quest);
+        document.body.appendChild(modal);
+        modal.showModal();
+    };
+
+    const createEditModal = (quest) => {
+        const modal = document.createElement('dialog');
+        modal.className = 'edit-modal';
+        
+        modal.innerHTML = `
+            <div class="modal-content">
+                <h2>Edit Quest</h2>
+                <form class="edit-quest-form">
+                    <label for="edit-title">Title:</label>
+                    <input type="text" id="edit-title" name="title" value="${quest.title}" required>
+                    
+                    <label for="edit-description">Description:</label>
+                    <textarea id="edit-description" name="description">${quest.description}</textarea>
+                    
+                    <label for="edit-due-date">Due Date:</label>
+                    <input type="date" id="edit-due-date" name="dueDate" value="${quest.dueDate}">
+                    
+                    <label for="edit-priority">Priority:</label>
+                    <select id="edit-priority" name="priority">
+                        <option value="Low" ${quest.priority === 'Low' ? 'selected' : ''}>Low</option>
+                        <option value="Medium" ${quest.priority === 'Medium' ? 'selected' : ''}>Medium</option>
+                        <option value="High" ${quest.priority === 'High' ? 'selected' : ''}>High</option>
+                    </select>
+                    
+                    <button type="submit">Save Changes</button>
+                    <button type="button" class="close-edit-modal">Cancel</button>
+                </form>
+            </div>
+        `;
+    
+        const closeButton = modal.querySelector('.close-edit-modal');
+        closeButton.addEventListener('click', () => {
+            modal.close();
+            modal.remove(); 
+        });
+    
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.close();
+                modal.remove();
+            }
+        });
+    
+        const form = modal.querySelector('.edit-quest-form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const updatedQuest = {
+                title: formData.get('title'),
+                description: formData.get('description'),
+                dueDate: formData.get('dueDate'),
+                priority: formData.get('priority'),
+                complete: quest.complete
+            };
+            questLog.editQuest(quest.title, updatedQuest);
+            modal.close();
+            modal.remove();
+            renderQuests(); 
+        });
+    
+        return modal;
+    };
 
     return {
         allQuestRender,

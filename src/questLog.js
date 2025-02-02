@@ -52,6 +52,17 @@ export function QuestLog(){
         currentQuestLine = newQuestLineName;
     };
 
+    const editQuest = (oldTitle,newQuestInfo) =>{
+        const questIndex = allQuests.findIndex(quest => quest.title === oldTitle);
+        const quest = allQuests[questIndex];
+        quest.title = newQuestInfo["title"];
+        quest.description = newQuestInfo["description"];
+        quest.dueDate = newQuestInfo["dueDate"];
+        quest.priority = newQuestInfo["priority"];
+        quest.complete = newQuestInfo["complete"];
+
+    }
+
     const getAllQuests = () => allQuests;
     const getQuestLines = () => questLines;
 
@@ -63,6 +74,7 @@ export function QuestLog(){
         getCurrentQuestLine,
         setCurrentQuestLine,
         getAllQuests,
-        getQuestLines
+        getQuestLines,
+        editQuest,
     };
 };
