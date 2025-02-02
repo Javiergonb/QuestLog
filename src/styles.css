@@ -76,13 +76,16 @@ html{
     
 }
 
-.quest-lines-container{
+.quest-lines-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     flex: 2;
     padding: 10%;
+    min-width: 0; /* Ensures flex items respect width constraints */
 }
+
+
 
 .quest-lines-header{
     font-size: 30px;
@@ -91,6 +94,7 @@ html{
 
 .quest-line-list{
     display: flex;
+    box-sizing: content-box;
     flex-direction: column;
     gap: 10px;
     padding-left: 10px;
@@ -172,4 +176,36 @@ dialog{
 
 .form-container:not(.hidden) {
     display: block;
+}
+
+.quest-line-card {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    height: 25px;
+    width: 100px; /* Adjust this if needed */
+    white-space: nowrap; /* Prevent text from wrapping */
+    text-overflow: ellipsis; /* Add "..." when text overflows */
+    overflow: hidden; /* Hide overflowing text */
+    flex-shrink: 0; /* Prevent unwanted shrinking */
+}
+
+.quest-line-card .active{
+    background-color: #213555;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+}
+
+
+.quest-card {
+    transition: opacity 0.5s ease;
+}
+.completed {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+.complete-button{
+    text-decoration: none;
 }

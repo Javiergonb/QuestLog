@@ -1,36 +1,25 @@
-function Quest(title, description, dueDate, priority,complete = false) {
-    return { title, description, dueDate, priority,complete};
-}
-
-
-
-function QuestLog() {
+export function QuestLog(){
     const allQuests = [];
     const questLines = {};
-
     let currentQuestLine = null;
 
-    const addQuest = (quest) => {allQuests.push(quest)};
+
+
+    const addQuest = (quest) => {
+        allQuests.push(quest);
+        if(currentQuestLine){
+            questLines[currentQuestLine].push(quest);
+        }
+    };
 
     const createQuestLine = (questLineName) => {
         if (questLines[questLineName]) {
             throw new Error(`QuestLine '${questLineName}' already exists`);
         }
         questLines[questLineName] = [];
-    }
-
-    const addQuestToQuestLine = (quest,questLine) => {
-        if (!questLines[questLine]) {
-            throw new Error(`QuestLine '${questLine}' does not exist`);
-        }
-        if (!allQuests.includes(quest)) {
-            addQuest(quest)
-        }
-        questLines[questLine].push(quest);
-    }
+    };
 
     const getQuestsInQuestLine = (questLineName) => {
-    
         if (!questLines[questLineName]) {
             throw new Error(`QuestLine '${questLineName}' does not exist`);
         }
@@ -41,40 +30,39 @@ function QuestLog() {
         const index = allQuests.indexOf(quest);
         if (index !== -1) {
             allQuests.splice(index, 1);
-        }
-        for (const line of Object.values(questLines)) {
-            const questIndex = line.indexOf(quest);
-            if (questIndex !== -1) {
-                line.splice(questIndex, 1);
-            }
+            Object.values(questLines).forEach(line => {
+                const questIndex = line.indexOf(quest);
+                if (questIndex !== -1) {
+                    line.splice(questIndex, 1);
+                }
+            });
         }
     };
 
     const getCurrentQuestLine = () => currentQuestLine;
 
     const setCurrentQuestLine = (newQuestLineName) => {
+        if (newQuestLineName === "All Quests") {
+            currentQuestLine = null;
+            return;
+        }
         if (!questLines[newQuestLineName]) {
-            throw new Error(`QuestLine '${questLine}' does not exist`);
+            throw new Error(`QuestLine '${newQuestLineName}' does not exist`);
         }
         currentQuestLine = newQuestLineName;
-    }
+    };
+
+    const getAllQuests = () => allQuests;
+    const getQuestLines = () => questLines;
 
     return {
         addQuest,
         createQuestLine,
-        addQuestToQuestLine,
         removeQuest,
         getQuestsInQuestLine,
-        allQuests,
-        questLines,
         getCurrentQuestLine,
         setCurrentQuestLine,
-
-    }
-}
-
-
-export { Quest, QuestLog };
-
-
-
+        getAllQuests,
+        getQuestLines
+    };
+};
