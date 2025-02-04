@@ -1,15 +1,17 @@
-export function QuestLog(){
+
+export function QuestLog(localStorage){
     const allQuests = [];
     const questLines = {};
     let currentQuestLine = null;
 
-
+    localStorage.getQuestsFromLocalStorage(allQuests,questLines);
 
     const addQuest = (quest) => {
         allQuests.push(quest);
         if(currentQuestLine){
             questLines[currentQuestLine].push(quest);
         }
+        localStorage.saveQuestsToLocalStorage(allQuests,questLines);
     };
 
     const createQuestLine = (questLineName) => {
@@ -17,6 +19,7 @@ export function QuestLog(){
             throw new Error(`QuestLine '${questLineName}' already exists`);
         }
         questLines[questLineName] = [];
+        localStorage.saveQuestsToLocalStorage(allQuests,questLines);
     };
 
     const getQuestsInQuestLine = (questLineName) => {
@@ -36,7 +39,9 @@ export function QuestLog(){
                     line.splice(questIndex, 1);
                 }
             });
+            localStorage.saveQuestsToLocalStorage(allQuests,questLines);
         }
+        
     };
 
     const getCurrentQuestLine = () => currentQuestLine;
@@ -50,6 +55,7 @@ export function QuestLog(){
             throw new Error(`QuestLine '${newQuestLineName}' does not exist`);
         }
         currentQuestLine = newQuestLineName;
+        localStorage.saveQuestsToLocalStorage(allQuests,questLines);
     };
 
     const editQuest = (oldTitle,newQuestInfo) =>{
@@ -60,7 +66,7 @@ export function QuestLog(){
         quest.dueDate = newQuestInfo["dueDate"];
         quest.priority = newQuestInfo["priority"];
         quest.complete = newQuestInfo["complete"];
-
+        localStorage.saveQuestsToLocalStorage(allQuests,questLines);
     }
 
     const getAllQuests = () => allQuests;

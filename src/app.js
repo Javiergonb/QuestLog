@@ -1,6 +1,7 @@
 import { QuestLog } from './questLog';
 import { QuestRenderer } from './questRenderer';
 import { FormManager } from './formManager'
+import {LocalStorageManager} from "./localStorageManager";
 import "./styles.css";
 
 const initializeApp = () => {
@@ -14,7 +15,8 @@ const initializeApp = () => {
         questForm: document.querySelector('#new-quest-form')
     };
 
-    const questLog = (function(){ return QuestLog()})();
+    const localStorage = (function(){ return LocalStorageManager()})();
+    const questLog = (function(){ return QuestLog(localStorage)})();
     const renderer = (function(){ return QuestRenderer(questLog, domElements)})();
     const formManager = (function(){ return FormManager(questLog, renderer)})();
 
@@ -22,7 +24,6 @@ const initializeApp = () => {
 
     // Initialize event listeners
     formManager.initializeEventListeners();
-    questLog.createQuestLine("Side");
 
     // Initial render
     renderer.allQuestRender();
