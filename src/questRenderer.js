@@ -13,6 +13,7 @@ export const QuestRenderer = (questLog, domElements) => {
                 <button class="edit-button">Edit</button>
                 <div class="due-date">${quest.dueDate}</div>
                 <div class="priority">${quest.priority}</div>
+                <button class="delete-button">X</button>
             </div>
         `;
 
@@ -24,17 +25,21 @@ export const QuestRenderer = (questLog, domElements) => {
         const completeButton = questElement.querySelector('.complete-button');
         const detailsButton = questElement.querySelector('.details-button');
         const editButton = questElement.querySelector('.edit-button');
+        const deleteButton = questElement.querySelector('.delete-button')
 
-        completeButton.addEventListener("click",()=>{
+        completeButton.addEventListener("click",() => { 
             handleCompleteButton(questElement);
         })
 
-        detailsButton.addEventListener("click",()=>{
+        detailsButton.addEventListener("click",() => {
             handleDetailsButton(questElement);
         })
-        editButton.addEventListener("click",()=>{
+        editButton.addEventListener("click",() => {
             handleEditButton(questElement);
         });
+        deleteButton.addEventListener("click", () => {
+            handleDeleteButton(questElement);
+        })
     };
 
     const renderQuests = () => {
@@ -169,6 +174,14 @@ export const QuestRenderer = (questLog, domElements) => {
         document.body.appendChild(modal);
         modal.showModal();
     };
+
+    const handleDeleteButton = (questElement) =>{
+        const { questList } = domElements;
+        const quest = findQuest(questElement.querySelector(".quest-title").textContent)
+        questList.removeChild(questElement);
+        questLog.removeQuest(quest);
+        console.log(questLog.getAllQuests());
+    } 
 
     const createEditModal = (quest) => {
         const modal = document.createElement('dialog');
